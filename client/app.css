@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+}
+
+html,body,.centered {
+  height: 100%;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
