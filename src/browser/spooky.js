@@ -5,8 +5,8 @@ import esprima from "esprima";
 import escodegen from "escodegen";
 import _ from "lodash";
 
-// Spooky expects
-export function spookyFn(fn, ...args) {
+export function spookyFn(...args) {
+  let fn = args.pop();
   let parsedFn = esprima.parse("f = " + fn.toString())
     .body[0]
     .expression
@@ -20,7 +20,7 @@ export function spookyFn(fn, ...args) {
 }
 
 Spooky.prototype.waitForUrl = function(url) {
-  this.then(spookyFn(function(url) { this.waitForUrl(url) }, url));
+  this.then(spookyFn(url, function(url) { this.waitForUrl(url) }));
 }
 
 function setupEvents(sp) {

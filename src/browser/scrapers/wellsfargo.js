@@ -13,17 +13,17 @@ class WellsFargoScraper extends Scraper {
       let pass = this.account.password;
 
       sp.then(
-        spookyFn(function(user, pass) {
+        spookyFn(user, pass, function(user, pass) {
           this.fillSelectors("#Signon", {
             'input[name="userid"]': user,
             'input[name="password"]': pass
-            }, true);
-          }, user, pass)
-        );
+          }, true);
+        })
+      );
 
       // Wait for login to finish.
       sp.waitForUrl('https://online.wellsfargo.com/das/cgi-bin/session.cgi?screenid=SIGNON_PORTAL_PAUSE');
-    }
+    };
 
     let getCashAccounts = () => {
       sp.then(function() {
