@@ -50,7 +50,7 @@ class WellsFargoScraper extends Scraper {
   }
 
   fetchItems() {
-    spooky(sp => this.spook(sp));
+    spooky(this.spook.bind(this));
   }
 }
 
