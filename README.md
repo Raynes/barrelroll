@@ -17,7 +17,7 @@ Mostly to learn atom-shell and ES6.
 First of all, get [atom-shell](https://github.com/atom/atom-shell) by running:
 
 ```
-sh bootstrap.sh
+./bin/bootstrap-atom
 ```
 
 If you don't have the grunt-cli installed globally, get that:
