@@ -2,7 +2,6 @@
 
 import path from "path";
 import Config from "./config";
-import phantom from "phantom";
 import {System} from "es6-module-loader";
 
 var jqueryCDN = 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js';
@@ -42,25 +41,6 @@ class Scraper {
   // The info should include 'balance', 'transactions', and if payments are
   // applicable to the account, 'paymentDue' amount.
   fetchItems() {}
-
-  // Simplified phantoming. Takes a URL and a function. This function will
-  // recieve arguments 'page' and 'phantom', corresponding to the respective
-  // phantom objects. Automatically injects jquery into the page for you.
-  phantom(url, bloodhound) {
-
-    // We'll do something more interesting with these errors when we have client
-    // communication.
-    phantom.create(ph => {
-      ph.createPage(page => {
-        page.open(url, status => {
-          if (status === "success")
-            page.includeJs(jqueryCDN, () => bloodhound(page, ph));
-          else
-            console.error(`Failed to open ${url}`);
-        });
-      });
-    });
-  }
 
   // Refresh the object's data.
   refresh() {

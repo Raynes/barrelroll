@@ -1,11 +1,19 @@
+var glob = require('glob').sync;
+
 module.exports = function(grunt) {
 
+  // Just because I can.
+  Object.defineProperty(String.prototype, 'appPath', {
+    get: function() {
+      return "atom-shell/Atom.app/Contents/Resources/app/" + this;
+    }
+  });
+
   require("load-grunt-tasks")(grunt);
-  grunt.loadNpmTasks('grunt-contrib-copy');
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    "6to5": {
+    "babel": {
       options: {
         sourceMap: true,
         playground: true
@@ -14,15 +22,9 @@ module.exports = function(grunt) {
         files: [
           {
             expand: true,
-            cwd: 'browser/',
+            cwd: 'src',
             src: ['**/*.js'],
-            dest: 'lib/browser',
-          },
-          {
-            expand: true,
-            cwd: 'client/',
-            src: ['**/*.js'],
-            dest: 'lib/client'
+            dest: 'lib'
           }
         ]
       }
@@ -41,14 +43,21 @@ module.exports = function(grunt) {
             expand: true,
             cwd: "lib",
             src: ["**/*"],
-            dest: "atom-shell/Atom.app/Contents/Resources/app/"
+            dest: "".appPath
           },
-          {src: "main.js", dest: "atom-shell/Atom.app/Contents/Resources/app/main.js"},
-          {src: "package.json", dest: "atom-shell/Atom.app/Contents/Resources/app/package.json"}
+          {src: "main.js", dest: "main.js".appPath},
+          {src: "package.json", dest: "package.json".appPath}
         ]
+      }
+    },
+
+    watch: {
+      all: {
+        files: ["src/**/*.js"],
+        tasks: ["default"]
       }
     }
   });
 
-  grunt.registerTask("default", ["6to5", "copy"]);
+  grunt.registerTask("default", ["babel", "copy"]);
 };
