@@ -1,5 +1,3 @@
-var glob = require('glob').sync;
-
 module.exports = function(grunt) {
 
   // Just because I can.
